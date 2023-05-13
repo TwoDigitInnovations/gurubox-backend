@@ -1,6 +1,6 @@
 {
     "database": {
-        "url": "mongodb+srv://gurubox:{password}@cluster0.rehpkw0.mongodb.net/?retryWrites=true&w=majority"
+        "url": "mongodb+srv://gurubox:gurubox12345678@cluster0.rehpkw0.mongodb.net/?retryWrites=true&w=majority"
     },
     "jwt": {
         "secretOrKey": "PROD_SECRET",
