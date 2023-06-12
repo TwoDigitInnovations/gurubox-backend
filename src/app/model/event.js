@@ -20,6 +20,9 @@ const event = new mongoose.Schema(
     image: {
       type: String,
     },
+    amount: {
+      type: String,
+    },
   },
   {
     timestamps: true,
