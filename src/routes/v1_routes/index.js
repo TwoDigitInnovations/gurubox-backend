@@ -284,4 +284,32 @@ router.get("/festa/get-event", admin.getevent);
 router.post("/create-event", event?.create);
 router.get("/get-event", event?.getAllEvents);
 
+router.post(
+  "/create-booking",
+  isAuthenticated(["USER", "ADMIN"]),
+  event?.createBookig
+);
+router.post(
+  "/update-booking/:book_id",
+  isAuthenticated(["USER", "ADMIN"]),
+  event?.updateBookig
+);
+router.get("/get-booking", event?.getBooking);
+router.get(
+  "/user/get-booking",
+  isAuthenticated(["USER", "ADMIN"]),
+  event?.getBookingByUser
+);
+router.get(
+  "/get-booking/:book_id",
+  isAuthenticated(["USER", "ADMIN"]),
+  event?.getBookingById
+);
+
+router.delete(
+  "/delete-booking/:book_id",
+  isAuthenticated(["USER", "ADMIN"]),
+  event?.deleteBoking
+);
+
 module.exports = router;

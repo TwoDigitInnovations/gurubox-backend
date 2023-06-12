@@ -14,6 +14,12 @@ const event = new mongoose.Schema(
     address: {
       type: String,
     },
+    lat: {
+      type: String,
+    },
+    long: {
+      type: String,
+    },
     capacity: {
       type: String,
     },
@@ -22,6 +28,15 @@ const event = new mongoose.Schema(
     },
     amount: {
       type: String,
+    },
+    description: {
+      type: String,
+    },
+    imageorvideo: {
+      type: String,
+    },
+    gallery: {
+      type: Array,
     },
   },
   {
