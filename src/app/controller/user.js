@@ -38,7 +38,7 @@ module.exports = {
 
       return response.ok(res, {
         token,
-        username: user.username,
+        // username: user.username,
         type: user.type,
         email: user.email,
         id: user._id,
@@ -71,15 +71,15 @@ module.exports = {
         });
         user.password = user.encryptPassword(req.body.password);
         await user.save();
-        mailNotification.welcomeMail({
-          email: user.email,
-          username: user.username,
-        });
+        // mailNotification.welcomeMail({
+        //   email: user.email,
+        //   username: user.username,
+        // });
         // let token = await new jwtService().createJwtToken({ id: user._id, email: user.username });
-        return response.created(res, { username: user.username });
+        return response.created(res, { email: user.email });
       } else {
         return response.conflict(res, {
-          message: "username or email already exists.",
+          message: " Email already exists.",
         });
       }
     } catch (error) {
