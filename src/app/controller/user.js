@@ -7,6 +7,7 @@ const mailNotification = require("./../services/mailNotification");
 const mongoose = require("mongoose");
 const Device = mongoose.model("Device");
 const User = mongoose.model("User");
+const Organization = mongoose.model("Organization");
 const Verification = mongoose.model("Verification");
 const Notification = mongoose.model("Notification");
 const Identity = mongoose.model("Identity");
@@ -64,7 +65,9 @@ module.exports = {
           password: payload.password,
           type: payload.type,
           email: payload.email.toLowerCase(),
-          fullName: payload.fullName,
+          firstname: payload.firstname,
+          lastname: payload.lastname,
+          country: payload.country,
         });
         user.password = user.encryptPassword(req.body.password);
         await user.save();
@@ -83,6 +86,45 @@ module.exports = {
       return response.error(res, error);
     }
   },
+
+  createOrganizaton: async (req, res) => {
+    try {
+      const payload = req.body;
+      let user = await Organization.find({
+        $or: [
+          { name: payload.name.toLowerCase() },
+          { email: payload.email.toLowerCase() },
+        ],
+      }).lean();
+      if (!user.length) {
+        // let user = await User.findOne({ email: payload.email.toLowerCase()  }).lean();
+        // if (!user) {
+        let user = new Organization({
+          name: payload.name.toLowerCase(),
+          password: payload.password,
+          email: payload.email.toLowerCase(),
+          firstname: payload.firstname,
+          lastname: payload.lastname,
+          country: payload.country,
+        });
+        user.password = user.encryptPassword(req.body.password);
+        await user.save();
+        // mailNotification.welcomeMail({
+        //   email: user.email,
+        //   username: user.username,
+        // });
+        // let token = await new jwtService().createJwtToken({ id: user._id, email: user.username });
+        return response.created(res, { name: user.name });
+      } else {
+        return response.conflict(res, {
+          message: "Organization or email already exists.",
+        });
+      }
+    } catch (error) {
+      return response.error(res, error);
+    }
+  },
+
   changePasswordProfile: async (req, res) => {
     try {
       let user = await User.findById(req.user.id);

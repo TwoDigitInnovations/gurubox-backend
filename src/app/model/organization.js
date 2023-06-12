@@ -28,11 +28,12 @@ const bankSchema = new mongoose.Schema({
     default: "",
   },
 });
-const userSchema = new mongoose.Schema(
+const organizationSchema = new mongoose.Schema(
   {
-    username: {
+    name: {
       type: String,
       trim: true,
+      require: true,
     },
     firstname: {
       type: String,
@@ -56,15 +57,14 @@ const userSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["USER", "ADMIN"],
-      default: "USER",
+      default: "Organization",
     },
   },
   {
     timestamps: true,
   }
 );
-userSchema.set("toJSON", {
+organizationSchema.set("toJSON", {
   getters: true,
   virtuals: false,
   transform: (doc, ret, options) => {
@@ -73,10 +73,12 @@ userSchema.set("toJSON", {
   },
 });
 
-userSchema.methods.encryptPassword = (password) => {
+organizationSchema.methods.encryptPassword = (password) => {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
-userSchema.methods.isValidPassword = function isValidPassword(password) {
+organizationSchema.methods.isValidPassword = function isValidPassword(
+  password
+) {
   return bcrypt.compareSync(password, this.password);
 };
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Organization", organizationSchema);
