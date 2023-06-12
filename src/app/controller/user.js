@@ -53,7 +53,7 @@ module.exports = {
       const payload = req.body;
       let user = await User.find({
         $or: [
-          { username: payload.username.toLowerCase() },
+          // { username: payload.username.toLowerCase() },
           { email: payload.email.toLowerCase() },
         ],
       }).lean();
@@ -61,7 +61,7 @@ module.exports = {
         // let user = await User.findOne({ email: payload.email.toLowerCase()  }).lean();
         // if (!user) {
         let user = new User({
-          username: payload.username.toLowerCase(),
+          // username: payload.username.toLowerCase(),
           password: payload.password,
           type: payload.type,
           email: payload.email.toLowerCase(),
