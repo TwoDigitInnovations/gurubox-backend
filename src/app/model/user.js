@@ -35,10 +35,16 @@ const userSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
-    fullName: {
+    firstname: {
+      type: String,
+    },
+    lastname: {
       type: String,
     },
     address: {
+      type: String,
+    },
+    country: {
       type: String,
     },
     email: {
@@ -51,7 +57,7 @@ const userSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["USER", "ADMIN"],
+      enum: ["USER", "ADMIN", "EVENTER"],
       default: "USER",
     },
   },
