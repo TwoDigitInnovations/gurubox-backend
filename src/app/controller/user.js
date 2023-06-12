@@ -53,8 +53,8 @@ module.exports = {
       const payload = req.body;
       let user = await User.find({
         $or: [
-          { username: payload.email.toLowerCase() },
-          // { email: payload.email.toLowerCase() },
+          { username: payload.username.toLowerCase() },
+          { email: payload.email.toLowerCase() },
         ],
       }).lean();
       if (!user.length) {
