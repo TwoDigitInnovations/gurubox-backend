@@ -25,6 +25,15 @@ module.exports = {
     }
   },
 
+  getEventById: async (req, res) => {
+    try {
+      const event = await Event.findById(req?.params?.event_id);
+      return response.ok(res, event);
+    } catch (error) {
+      return response.error(res, error);
+    }
+  },
+
   createBookig: async (req, res) => {
     try {
       const payload = req?.body || {};
