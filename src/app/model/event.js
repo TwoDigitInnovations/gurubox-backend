@@ -29,14 +29,15 @@ const event = new mongoose.Schema(
     amount: {
       type: String,
     },
-    description: {
+    details: {
+      type: Object,
+    },
+    city: {
       type: String,
     },
-    imageorvideo: {
-      type: String,
-    },
-    gallery: {
-      type: Array,
+    posted_by: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
   },
   {

@@ -30,10 +30,10 @@ const bankSchema = new mongoose.Schema({
 });
 const userSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
-      trim: true,
-    },
+    // username: {
+    //   type: String,
+    //   trim: true,
+    // },
     firstname: {
       type: String,
     },

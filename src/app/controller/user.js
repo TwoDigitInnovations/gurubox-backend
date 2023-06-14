@@ -51,12 +51,7 @@ module.exports = {
   signUp: async (req, res) => {
     try {
       const payload = req.body;
-      let user = await User.find({
-        $or: [
-          // { username: payload.username.toLowerCase() },
-          { email: payload.email.toLowerCase() },
-        ],
-      }).lean();
+      let user = await User.find({ email: payload.email.toLowerCase() }).lean();
       if (!user.length) {
         // let user = await User.findOne({ email: payload.email.toLowerCase()  }).lean();
         // if (!user) {
@@ -97,8 +92,6 @@ module.exports = {
         ],
       }).lean();
       if (!user.length) {
-        // let user = await User.findOne({ email: payload.email.toLowerCase()  }).lean();
-        // if (!user) {
         let user = new Organization({
           name: payload.name.toLowerCase(),
           password: payload.password,
@@ -124,6 +117,8 @@ module.exports = {
       return response.error(res, error);
     }
   },
+
+  // getOrganization
 
   changePasswordProfile: async (req, res) => {
     try {

@@ -8,6 +8,7 @@ module.exports = {
   create: async (req, res) => {
     try {
       const payload = req?.body || {};
+      payload.posted_by = req?.user?.id;
       let event = new Event(payload);
       const ev = await event.save();
       return response.ok(res, { event: ev, message: "Event created!" });
@@ -27,7 +28,10 @@ module.exports = {
 
   getEventById: async (req, res) => {
     try {
-      const event = await Event.findById(req?.params?.event_id);
+      const event = await Event.findById(req?.params?.event_id).populate(
+        "posted_by",
+        "firstname lastname email"
+      );
       return response.ok(res, event);
     } catch (error) {
       return response.error(res, error);
