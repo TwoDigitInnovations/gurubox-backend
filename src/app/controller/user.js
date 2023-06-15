@@ -164,6 +164,7 @@ module.exports = {
         new: true,
         upsert: true,
       });
+      delete usr.password;
       return response.ok(res, { user: usr, message: "Profile Updated." });
     } catch (error) {
       return response.error(res, error);
