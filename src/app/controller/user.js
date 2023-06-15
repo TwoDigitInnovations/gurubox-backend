@@ -36,16 +36,18 @@ module.exports = {
         { upsert: true }
       );
 
-      return response.ok(res, {
-        token,
-        // username: user.username,
-        type: user.type,
-        email: user.email,
-        id: user._id,
-        isOrganization: user.isOrganization,
-        profile: user.profile,
-        fullName: user.fullName,
-      });
+      // return response.ok(res, {
+      //   token,
+      //   // username: user.username,
+      //   type: user.type,
+      //   email: user.email,
+      //   id: user._id,
+      //   isOrganization: user.isOrganization,
+      //   profile: user.profile,
+      //   fullName: user.fullName,
+      // });
+      delete user.password;
+      return response.ok(res, user);
     })(req, res);
   },
   signUp: async (req, res) => {
