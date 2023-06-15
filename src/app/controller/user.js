@@ -47,7 +47,7 @@ module.exports = {
       //   fullName: user.fullName,
       // });
       delete user.password;
-      return response.ok(res, user);
+      return response.ok(res, { token, ...user });
     })(req, res);
   },
   signUp: async (req, res) => {
