@@ -160,8 +160,12 @@ module.exports = {
         };
       }
       const id = req.body.gaurd_id || req.user.id;
-      await User.updateOne({ _id: id }, { $set: req.body });
-      return response.ok(res, { message: "Profile Updated." });
+      const usr = await User.updateOne(
+        { _id: id },
+        { $set: req.body },
+        { new: true, upsert: true }
+      );
+      return response.ok(res, { user: usr, message: "Profile Updated." });
     } catch (error) {
       return response.error(res, error);
     }

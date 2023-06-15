@@ -59,6 +59,15 @@ const userSchema = new mongoose.Schema(
       enum: ["USER", "ADMIN"],
       default: "USER",
     },
+    city: {
+      type: String,
+    },
+    zip: {
+      type: String,
+    },
+    mobileNumber: {
+      type: String,
+    },
   },
   {
     timestamps: true,
