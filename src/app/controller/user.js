@@ -46,8 +46,12 @@ module.exports = {
       //   profile: user.profile,
       //   fullName: user.fullName,
       // });
-      delete user.password;
-      return response.ok(res, { token, ...user });
+      const data = {
+        token,
+        ...user?._doc,
+      };
+      delete data.password;
+      return response.ok(res, data);
     })(req, res);
   },
   signUp: async (req, res) => {
