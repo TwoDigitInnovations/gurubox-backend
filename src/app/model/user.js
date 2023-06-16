@@ -30,10 +30,11 @@ const bankSchema = new mongoose.Schema({
 });
 const userSchema = new mongoose.Schema(
   {
-    // username: {
-    //   type: String,
-    //   trim: true,
-    // },
+    org_id: {
+      type: String,
+      trim: true,
+      unique: true,
+    },
     firstname: {
       type: String,
     },
@@ -56,7 +57,7 @@ const userSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["USER", "ADMIN"],
+      enum: ["USER", "ADMIN", "ORG"],
       default: "USER",
     },
     city: {

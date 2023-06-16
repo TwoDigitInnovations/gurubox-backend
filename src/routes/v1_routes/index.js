@@ -10,7 +10,11 @@ const isAuthenticated = require("./../../middlewares/isAuthenticated");
 // auth routes
 router.post("/login", user.login);
 router.post("/signUp", user.signUp);
-router.post("/createorganizer", user.createOrganizaton);
+router.post(
+  "/createorganizer",
+  isAuthenticated(["USER", "ADMIN"]),
+  user.createOrganizaton
+);
 
 router.post("/login", user.login);
 router.post("/sendOTP", user.sendOTP);

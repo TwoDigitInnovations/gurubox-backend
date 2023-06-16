@@ -71,6 +71,7 @@ module.exports = {
           country: payload.country,
         });
         user.password = user.encryptPassword(req.body.password);
+
         await user.save();
         // mailNotification.welcomeMail({
         //   email: user.email,
@@ -91,34 +92,16 @@ module.exports = {
   createOrganizaton: async (req, res) => {
     try {
       const payload = req.body;
-      let user = await Organization.find({
-        $or: [
-          { name: payload.name.toLowerCase() },
-          { email: payload.email.toLowerCase() },
-        ],
-      }).lean();
-      if (!user.length) {
-        let user = new Organization({
-          name: payload.name.toLowerCase(),
-          password: payload.password,
-          email: payload.email.toLowerCase(),
-          firstname: payload.firstname,
-          lastname: payload.lastname,
-          country: payload.country,
-        });
-        user.password = user.encryptPassword(req.body.password);
-        await user.save();
-        // mailNotification.welcomeMail({
-        //   email: user.email,
-        //   username: user.username,
-        // });
-        // let token = await new jwtService().createJwtToken({ id: user._id, email: user.username });
-        return response.created(res, { name: user.name });
-      } else {
-        return response.conflict(res, {
-          message: "Organization or email already exists.",
-        });
-      }
+      const u = await User.findByIdAndUpdate(
+        req?.user?.id,
+        { org_id: payload.org_id, type: "ORG" },
+        {
+          new: true,
+          upsert: true,
+        }
+      );
+      delete u.password;
+      return response.ok(res, { user: u, message: "Became Organizer!" });
     } catch (error) {
       return response.error(res, error);
     }
