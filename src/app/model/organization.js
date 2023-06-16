@@ -30,34 +30,32 @@ const bankSchema = new mongoose.Schema({
 });
 const organizationSchema = new mongoose.Schema(
   {
-    name: {
+    org_id: {
       type: String,
       trim: true,
       require: true,
     },
-    firstname: {
+    public_email: {
       type: String,
     },
-    lastname: {
+    number: {
       type: String,
     },
-    address: {
+    about_you: {
       type: String,
     },
-    country: {
+    website: {
       type: String,
     },
-    email: {
-      type: String,
-      trim: true,
-      unique: true,
-    },
-    password: {
+    logo: {
       type: String,
     },
-    type: {
+    banner: {
       type: String,
-      default: "Organization",
+    },
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
   },
   {

@@ -82,6 +82,7 @@ module.exports = {
   },
 
   getBookingByUser: async (req, res) => {
+    console.log(req);
     try {
       let book = await TicketBooking.find({ booked_by: req?.user.id }).populate(
         "event_id"

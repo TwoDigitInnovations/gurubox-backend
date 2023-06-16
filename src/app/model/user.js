@@ -69,6 +69,24 @@ const userSchema = new mongoose.Schema(
     mobileNumber: {
       type: String,
     },
+    public_email: {
+      type: String,
+    },
+    public_number: {
+      type: String,
+    },
+    about_you: {
+      type: String,
+    },
+    website: {
+      type: String,
+    },
+    logo: {
+      type: String,
+    },
+    banner: {
+      type: String,
+    },
   },
   {
     timestamps: true,
