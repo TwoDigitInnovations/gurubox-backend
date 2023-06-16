@@ -20,7 +20,10 @@ const ticketBooking = new mongoose.Schema(
     price: {
       type: Number,
     },
-
+    event_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Event",
+    },
     qty: {
       type: String,
     },

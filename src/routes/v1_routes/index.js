@@ -296,29 +296,29 @@ router.get("/get-event/similier/:id", event?.getSimilierEvent);
 
 router.post(
   "/create-booking",
-  isAuthenticated(["USER", "ADMIN"]),
+  isAuthenticated(["USER", "ADMIN", "ORG"]),
   event?.createBookig
 );
 router.post(
   "/update-booking/:book_id",
-  isAuthenticated(["USER", "ADMIN"]),
+  isAuthenticated(["USER", "ADMIN", "ORG"]),
   event?.updateBookig
 );
 router.get("/get-booking", event?.getBooking);
 router.get(
   "/user/get-booking",
-  isAuthenticated(["USER", "ADMIN"]),
+  isAuthenticated(["USER", "ADMIN", "ORG"]),
   event?.getBookingByUser
 );
 router.get(
   "/get-booking/:book_id",
-  isAuthenticated(["USER", "ADMIN"]),
+  isAuthenticated(["USER", "ADMIN", "ORG"]),
   event?.getBookingById
 );
 
 router.delete(
   "/delete-booking/:book_id",
-  isAuthenticated(["USER", "ADMIN"]),
+  isAuthenticated(["USER", "ADMIN", "ORG"]),
   event?.deleteBoking
 );
 

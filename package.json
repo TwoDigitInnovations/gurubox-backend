@@ -9,7 +9,9 @@
     "logs":"pm2 log",
     "restart":"pm2 restart all",
     "start:dev": "nodemon server.js",
-    "test": "set NODE_ENV=test&&mocha --timeout 15000 --colors --verbose -- __tests__/**/*.js"
+    "test": "set NODE_ENV=test&&mocha --timeout 15000 --colors --verbose -- __tests__/**/*.js",
+    "vercel-prod": "export NPM_CONFIG_PREFIX=~/.npm-global & export NPM_CONFIG_PREFIX=~/.npm-global & vercel --prod"
+
   },
   "author": "",
   "license": "ISC",
