@@ -288,6 +288,7 @@ router.get(
   event?.getAllEvents
 );
 router.get("/get-event/:event_id", event?.getEventById);
+router.get("/get-event/similier/:id", event?.getSimilierEvent);
 
 router.post(
   "/create-booking",

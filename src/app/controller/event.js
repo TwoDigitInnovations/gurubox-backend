@@ -26,6 +26,15 @@ module.exports = {
     }
   },
 
+  getSimilierEvent: async (req, res) => {
+    try {
+      const event = await Event.find({ posted_by: req?.params?.id });
+      return response.ok(res, event);
+    } catch (error) {
+      return response.error(res, error);
+    }
+  },
+
   getEventById: async (req, res) => {
     try {
       const event = await Event.findById(req?.params?.event_id).populate(
