@@ -11,7 +11,7 @@ const event = new mongoose.Schema(
     ticket_close_date: {
       type: Date,
     },
-    event_type: {
+    type_of_event: {
       type: String,
     },
     name: {
@@ -40,6 +40,18 @@ const event = new mongoose.Schema(
     },
     city: {
       type: String,
+    },
+    currency: {
+      type: String,
+    },
+    dress_code: {
+      type: String,
+    },
+    age_limit: {
+      type: String,
+    },
+    id_requirement: {
+      type: Boolean,
     },
     posted_by: {
       type: mongoose.Schema.Types.ObjectId,
