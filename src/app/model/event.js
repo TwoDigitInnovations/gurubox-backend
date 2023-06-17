@@ -8,6 +8,12 @@ const event = new mongoose.Schema(
     end_date: {
       type: Date,
     },
+    ticket_close_date: {
+      type: Date,
+    },
+    event_type: {
+      type: String,
+    },
     name: {
       type: String,
     },
