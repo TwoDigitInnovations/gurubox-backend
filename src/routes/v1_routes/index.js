@@ -286,11 +286,7 @@ router.get("/festa/get-event", admin.getevent);
 
 ////event
 router.post("/create-event", isAuthenticated(["ADMIN", "ORG"]), event?.create);
-router.get(
-  "/get-event",
-
-  event?.getAllEvents
-);
+router.get("/get-event", event?.getAllEvents);
 router.get("/get-event/:event_id", event?.getEventById);
 router.get("/get-event/similier/:id", event?.getSimilierEvent);
 
