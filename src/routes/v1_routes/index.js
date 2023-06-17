@@ -285,7 +285,7 @@ router.post("/festa/delete-event", admin.deleteEvent);
 router.get("/festa/get-event", admin.getevent);
 
 ////event
-router.post("/create-event", isAuthenticated(["ADMIN"]), event?.create);
+router.post("/create-event", isAuthenticated(["ADMIN", "ORG"]), event?.create);
 router.get(
   "/get-event",
 
