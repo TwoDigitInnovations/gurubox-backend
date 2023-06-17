@@ -26,6 +26,23 @@ module.exports = {
     }
   },
 
+  getAllEventsbyFilter: async (req, res) => {
+    try {
+      let d = new Date(req.query.start);
+      let de = new Date(req.query.end);
+      let cond = { $gte: d, $lt: de };
+      const events = await Event.find({
+        posted_by: req.user.id,
+        start_date: cond,
+      })
+        .sort({ start_date: 1 })
+        .lean();
+      return response.ok(res, { events });
+    } catch (error) {
+      return response.error(res, error);
+    }
+  },
+
   getSimilierEvent: async (req, res) => {
     try {
       const event = await Event.find({ posted_by: req?.params?.id });
