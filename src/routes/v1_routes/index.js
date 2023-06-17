@@ -52,18 +52,18 @@ router.get(
 router.get("/user/config", job.getConfig);
 router.post(
   "/settings",
-  isAuthenticated(["USER", "PROVIDER", "ADMIN"]),
+  isAuthenticated(["USER", "ORG", "ADMIN"]),
   user.updateSettings
 );
 router.get(
   "/settings",
-  isAuthenticated(["USER", "PROVIDER", "ADMIN"]),
+  isAuthenticated(["USER", "ORG", "ADMIN"]),
   user.getSettings
 );
 // Service Provider
 router.post(
   "/provider/incident",
-  isAuthenticated(["PROVIDER"]),
+  isAuthenticated(["ORG"]),
   upload.array("file", 10),
   job.addIncident
 );
@@ -72,74 +72,62 @@ router.post(
   isAuthenticated(["USER", "ADMIN"]),
   job.getIncidents
 );
-router.post(
-  "/provider/jobs/near",
-  isAuthenticated(["PROVIDER"]),
-  job.jobsNearMe
-);
+router.post("/provider/jobs/near", isAuthenticated(["ORG"]), job.jobsNearMe);
 router.get(
   "/provider/jobs/available/:filter?",
-  isAuthenticated(["PROVIDER"]),
+  isAuthenticated(["ORG"]),
   job.availableJobs
 );
-router.put(
-  "/jobs/apply/:job_id",
-  isAuthenticated(["PROVIDER", "ADMIN"]),
-  job.apply
-);
-router.get(
-  "/provider/myjobs",
-  isAuthenticated(["PROVIDER"]),
-  job.upcommingJobs
-);
+router.put("/jobs/apply/:job_id", isAuthenticated(["ORG", "ADMIN"]), job.apply);
+router.get("/provider/myjobs", isAuthenticated(["ORG"]), job.upcommingJobs);
 router.get(
   "/provider/history/:filter",
-  isAuthenticated(["PROVIDER"]),
+  isAuthenticated(["ORG"]),
   job.historyProvider
 );
 // service provide + User
 router.get(
   "/jobs/:job_id",
-  isAuthenticated(["USER", "PROVIDER", "ADMIN"]),
+  isAuthenticated(["USER", "ORG", "ADMIN"]),
   job.getJob
 );
 router.delete(
   "/jobs/reject/:job_id",
-  isAuthenticated(["PROVIDER"]),
+  isAuthenticated(["ORG"]),
   job.rejectInvite
 );
 router.post(
   "/profile/changePassword",
-  isAuthenticated(["USER", "PROVIDER"]),
+  isAuthenticated(["USER", "ORG"]),
   user.changePasswordProfile
 );
 
-router.get("/me", isAuthenticated(["USER", "PROVIDER", "ORG"]), user.me);
+router.get("/me", isAuthenticated(["USER", "ORG", "ORG"]), user.me);
 router.post(
   "/profile/update",
-  isAuthenticated(["USER", "PROVIDER", "ADMIN"]),
+  isAuthenticated(["USER", "ORG", "ADMIN"]),
   user.updateUser
 );
 
 router.post(
   "/profile/file",
-  isAuthenticated(["USER", "PROVIDER"]),
+  isAuthenticated(["USER", "ORG"]),
   upload.single("file"),
   user.fileUpload
 );
 
 router.get(
   "/notification",
-  isAuthenticated(["USER", "PROVIDER"]),
+  isAuthenticated(["USER", "ORG"]),
   user.notification
 );
 router.delete(
   "/notification/:not_id?",
-  isAuthenticated(["USER", "PROVIDER"]),
+  isAuthenticated(["USER", "ORG"]),
   user.deleteNotification
 );
 
-router.post("/jobEvents", isAuthenticated(["PROVIDER"]), job.jobEvents);
+router.post("/jobEvents", isAuthenticated(["ORG"]), job.jobEvents);
 
 router.post(
   "/admin/jobs",
