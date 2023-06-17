@@ -12,6 +12,7 @@ const Verification = mongoose.model("Verification");
 const Notification = mongoose.model("Notification");
 const Identity = mongoose.model("Identity");
 const Client = mongoose.model("Client");
+const Help = mongoose.model("Help");
 
 module.exports = {
   // login controller
@@ -455,6 +456,36 @@ module.exports = {
       let client = req.params["client_id"];
       await Client.findByIdAndUpdate(client, req.body);
       return response.ok(res, { message: "Client updated!" });
+    } catch (error) {
+      return response.error(res, error);
+    }
+  },
+
+  createHelp: async (req, res) => {
+    try {
+      let payload = req.body;
+      payload.user = req.user.id;
+      let help = new Help(payload);
+      await help.save();
+      return response.ok(res, { message: "Help Submitted" });
+    } catch (error) {
+      return response.error(res, error);
+    }
+  },
+
+  getHelp: async (req, res) => {
+    try {
+      const help = await Help.find();
+      return response.ok(res, help);
+    } catch (error) {
+      return response.error(res, error);
+    }
+  },
+
+  getHelpByUser: async (req, res) => {
+    try {
+      const help = await Help.find({ user: req.user.id });
+      return response.ok(res, help);
     } catch (error) {
       return response.error(res, error);
     }

@@ -311,4 +311,23 @@ router.delete(
   event?.deleteBoking
 );
 
+//help
+router.post(
+  "/create-help",
+  isAuthenticated(["USER", "ADMIN", "ORG"]),
+  user.createHelp
+);
+
+router.get(
+  "/get-help",
+  isAuthenticated(["USER", "ADMIN", "ORG"]),
+  user.getHelp
+);
+
+router.get(
+  "/user/get-help",
+  isAuthenticated(["USER", "ADMIN", "ORG"]),
+  user.getHelpByUser
+);
+
 module.exports = router;
