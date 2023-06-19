@@ -32,7 +32,7 @@ module.exports = {
     try {
       let d = moment(req.query.start, "MM/DD/YYYY").format();
       let de = moment(req.query.end, "MM/DD/YYYY").format();
-
+      console.log(d, de);
       let cond = { $gte: d, $lt: de };
       const events = await Event.find({
         posted_by: req.user.id,

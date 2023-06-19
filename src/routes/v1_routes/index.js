@@ -277,7 +277,7 @@ router.post("/create-event", isAuthenticated(["ADMIN", "ORG"]), event?.create);
 router.get("/get-event", event?.getAllEvents);
 router.get("/get-event/:event_id", event?.getEventById);
 router.get(
-  "/get-event?",
+  "/range/get-event?",
   isAuthenticated(["ADMIN", "ORG"]),
   event?.getAllEventsbyFilter
 );
