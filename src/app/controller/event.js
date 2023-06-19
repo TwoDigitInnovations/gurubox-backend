@@ -3,6 +3,7 @@ const Event = mongoose.model("Event");
 const TicketBooking = mongoose.model("TicketBooking");
 const response = require("./../responses");
 const { findByIdAndUpdate } = require("../model/user");
+const moment = require("moment");
 
 module.exports = {
   create: async (req, res) => {
@@ -27,9 +28,11 @@ module.exports = {
   },
 
   getAllEventsbyFilter: async (req, res) => {
+    console.log(req.query);
     try {
-      let d = new Date(req.query.start);
-      let de = new Date(req.query.end);
+      let d = moment(req.query.start, "MM/DD/YYYY").format();
+      let de = moment(req.query.end, "MM/DD/YYYY").format();
+
       let cond = { $gte: d, $lt: de };
       const events = await Event.find({
         posted_by: req.user.id,
@@ -37,7 +40,7 @@ module.exports = {
       })
         .sort({ start_date: 1 })
         .lean();
-      return response.ok(res, { events });
+      return response.ok(res, { d, de, events });
     } catch (error) {
       return response.error(res, error);
     }
@@ -65,8 +68,8 @@ module.exports = {
         }
         // }
       });
-      let d = new Date(req.query.start);
-      let de = new Date(req.query.end);
+      let d = moment(req.query.start, "MM/DD/YYYY").format();
+      let de = moment(req.query.end, "MM/DD/YYYY").format();
       let cond = { $gte: d, $lt: de };
       const events = await Event.find({
         posted_by: req.user.id,
