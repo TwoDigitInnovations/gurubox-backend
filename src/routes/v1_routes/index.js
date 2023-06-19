@@ -281,6 +281,13 @@ router.get(
   isAuthenticated(["ADMIN", "ORG"]),
   event?.getAllEventsbyFilter
 );
+
+router.get(
+  "/dashboard/get-event?",
+  isAuthenticated(["ADMIN", "ORG"]),
+  event?.getAllEventsforDashBoard
+);
+
 router.get("/get-event/similier/:id", event?.getSimilierEvent);
 
 router.post(

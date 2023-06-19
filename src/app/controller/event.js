@@ -43,6 +43,43 @@ module.exports = {
     }
   },
 
+  getAllEventsforDashBoard: async (req, res) => {
+    try {
+      const count = await Event.count({ posted_by: req.user.id });
+      const tick = await TicketBooking.find().populate("event_id");
+      const book = tick.filter(
+        (f) => f.event_id?.posted_by.toString() === req.user.id.toString()
+      );
+      let summary = {
+        event: count,
+        tickets: 0,
+        balance: 0,
+        customer: [],
+      };
+      book.map((f) => {
+        // if (f.event_id?.posted_by.toString() === req.user.id.toString()) {
+        summary.tickets = summary.tickets + Number(f.qty);
+        summary.balance = summary.balance + Number(f.total);
+        if (!summary.customer.includes(f.booked_by)) {
+          summary.customer.push(f.booked_by);
+        }
+        // }
+      });
+      let d = new Date(req.query.start);
+      let de = new Date(req.query.end);
+      let cond = { $gte: d, $lt: de };
+      const events = await Event.find({
+        posted_by: req.user.id,
+        start_date: cond,
+      })
+        .sort({ start_date: 1 })
+        .lean();
+      return response.ok(res, { events, summary, book });
+    } catch (error) {
+      return response.error(res, error);
+    }
+  },
+
   getSimilierEvent: async (req, res) => {
     try {
       const event = await Event.find({ posted_by: req?.params?.id });
