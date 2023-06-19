@@ -68,8 +68,8 @@ module.exports = {
         }
         // }
       });
-      let d = moment(req.query.start, "MM/DD/YYYY").format();
-      let de = moment(req.query.end, "MM/DD/YYYY").format();
+      let d = moment(req.query.start, "YYYY/MM/DD").format();
+      let de = moment(req.query.end, "YYYY/MM/DD").format();
       let cond = { $gte: d, $lt: de };
       const events = await Event.find({
         posted_by: req.user.id,
