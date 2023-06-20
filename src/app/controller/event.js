@@ -104,6 +104,43 @@ module.exports = {
     }
   },
 
+  globalSearchEvents: async (req, res) => {
+    try {
+      console.log("called");
+      let q = req?.query;
+      let cond = {};
+      if (q.category) {
+        cond.type_of_event = q.category;
+      }
+      if (q.location) {
+        cond.city = q.location;
+      }
+      if (q.start && !q.end) {
+        let d = moment(req.query.start, "YYYY/MM/DD").format();
+
+        cond.start_date = { $gte: d };
+      }
+      if (!q.start && q.end) {
+        let de = moment(req.query.end, "YYYY/MM/DD").format();
+        cond.start_date = { $lt: de };
+      }
+      if (q.start && q.end) {
+        let d = moment(req.query.start, "YYYY/MM/DD").format();
+        let de = moment(req.query.end, "YYYY/MM/DD").format();
+        cond.start_date = { $gte: d, $lt: de };
+      }
+      console.log(cond);
+      const event = await Event.find(cond).populate(
+        "posted_by",
+        "firstname lastname email"
+      );
+
+      return response.ok(res, event);
+    } catch (error) {
+      return response.error(res, error);
+    }
+  },
+
   createBookig: async (req, res) => {
     try {
       const payload = req?.body || {};

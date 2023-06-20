@@ -289,6 +289,7 @@ router.get(
 );
 
 router.get("/get-event/similier/:id", event?.getSimilierEvent);
+router.get("/event/globalSearch", event?.globalSearchEvents);
 
 router.post(
   "/create-booking",
