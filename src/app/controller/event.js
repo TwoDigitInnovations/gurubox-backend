@@ -28,7 +28,6 @@ module.exports = {
   },
 
   getAllEventsbyFilter: async (req, res) => {
-    console.log(req.query);
     try {
       let d = moment(req.query.start, "MM/DD/YYYY").format();
       let de = moment(req.query.end, "MM/DD/YYYY").format();
@@ -106,7 +105,6 @@ module.exports = {
 
   globalSearchEvents: async (req, res) => {
     try {
-      console.log("called");
       let q = req?.query;
       let cond = {};
       if (q.category) {
@@ -129,7 +127,7 @@ module.exports = {
         let de = moment(req.query.end, "YYYY/MM/DD").format();
         cond.start_date = { $gte: d, $lt: de };
       }
-      console.log(cond);
+
       const event = await Event.find(cond).populate(
         "posted_by",
         "firstname lastname email"
