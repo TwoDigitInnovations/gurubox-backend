@@ -274,6 +274,11 @@ router.get("/festa/get-event", admin.getevent);
 
 ////event
 router.post("/create-event", isAuthenticated(["ADMIN", "ORG"]), event?.create);
+router.post(
+  "/update-event/:event_id",
+  isAuthenticated(["ADMIN", "ORG"]),
+  event?.updtaeEvent
+);
 router.get("/get-event", event?.getAllEvents);
 router.get("/get-event/:event_id", event?.getEventById);
 router.get(

@@ -139,6 +139,23 @@ module.exports = {
     }
   },
 
+  updtaeEvent: async (req, res) => {
+    try {
+      const payload = req?.body || {};
+      let event = await Event.findByIdAndUpdate(
+        req?.params?.event_id,
+        payload,
+        {
+          new: true,
+          upsert: true,
+        }
+      );
+      return response.ok(res, event);
+    } catch (error) {
+      return response.error(res, error);
+    }
+  },
+
   createBookig: async (req, res) => {
     try {
       const payload = req?.body || {};
