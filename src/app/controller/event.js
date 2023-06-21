@@ -4,6 +4,9 @@ const TicketBooking = mongoose.model("TicketBooking");
 const response = require("./../responses");
 const { findByIdAndUpdate } = require("../model/user");
 const moment = require("moment");
+const notification = require("../services/notification");
+const mailNotification = require("./../services/mailNotification");
+const userHelper = require("./../helper/user");
 
 module.exports = {
   create: async (req, res) => {
@@ -159,9 +162,19 @@ module.exports = {
   createBookig: async (req, res) => {
     try {
       const payload = req?.body || {};
+      const user = await userHelper.find({ _id: req?.user.id });
+      console.log(user);
       payload.booked_by = req?.user.id;
       let book = new TicketBooking(payload);
       const ev = await book.save();
+      const eventbook = await TicketBooking.findById({ _id: ev._id }).populate(
+        "event_id"
+      );
+      await mailNotification.ConfirmBooking({
+        user,
+        event: eventbook,
+      });
+
       return response.ok(res, { book: ev, message: "Booking created!" });
     } catch (error) {
       return response.error(res, error);

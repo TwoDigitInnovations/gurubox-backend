@@ -20,6 +20,9 @@ const ticketBooking = new mongoose.Schema(
     price: {
       type: Number,
     },
+    name_on_ticket: {
+      type: String,
+    },
     event_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Event",
@@ -48,6 +51,9 @@ const ticketBooking = new mongoose.Schema(
     city: {
       type: String,
     },
+    country: {
+      type: String,
+    },
     zip: {
       type: String,
     },
@@ -57,6 +63,9 @@ const ticketBooking = new mongoose.Schema(
     booked_by: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+    },
+    agree_terms: {
+      type: Boolean,
     },
   },
   {

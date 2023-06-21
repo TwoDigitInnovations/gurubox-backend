@@ -1,12 +1,13 @@
 const nodemailer = require("nodemailer");
+const mongoose = require("mongoose");
+const Notification = mongoose.model("Notification");
+const moment = require("moment");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    // user: process.env.MAIL_USER,
-    // pass: process.env.MAIL_PASS
-    user: "2digitinnovations@gmail.com",
-    pass: "odhhxbiavjqcdqop",
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
   },
 });
 const sendMail = async (to, subject, html) => {
@@ -17,6 +18,7 @@ const sendMail = async (to, subject, html) => {
       subject,
       html,
     };
+    console.log(mailConfigurations);
     transporter.sendMail(mailConfigurations, function (error, info) {
       if (error) return reject(error);
       return resolve(info);
@@ -45,6 +47,39 @@ module.exports = {
     } catch (err) {
       console.log(err);
       throw new Error("[passwordChange]Could not send OTP mail");
+    }
+  },
+  ConfirmBooking: async ({ user, event }) => {
+    try {
+      const notObj = {
+        user: user._id,
+        message: "Your event booking has been comfirmed",
+        event: event.event_id._id,
+      };
+      console.log(notObj);
+      // if (job) notObj.invited_for = job;
+      await Notification.create(notObj);
+      const html = `<div>\r\n<h1>Dear ${user.firstname} ${
+        user.lastname
+      }.</h1>\r\n\r\n<h3>We are thrilled to confirm your ticket booking for ${
+        event.event_id.name
+      }. Here are the details:</h3> \r\n<p>Event: ${
+        event.event_id.name
+      }</p><p style="margin:0px;">Date: ${moment(
+        event.event_id.start_date
+      ).format("DD/MM/YYYY,hh:mm A")}</p><p>Quantity: ${
+        event.qty
+      }</p>\r\n\r\n<p>Your tickets will be sent to you via email as PDF attachments closer to the event date. Remember to bring a valid ID matching the ticket name for smooth entry.</p>\r\n\r\n<p>If you have any questions, please reach out to our customer support team at [Customer Support Contact Details].<p/>\r\n\r\n<p>Thank you for choosing our platform. We can't wait to see you at ${
+        event.event_id.name
+      }!</p>\r\n\r\n<p>Best regards,</p>\r\n\r\n<h4>Gurubox</h4></div>`;
+      return await sendMail(
+        user.email,
+        `Ticket Confirmation for ${event.event_id.name}`,
+        html
+      );
+    } catch (err) {
+      console.log(err);
+      throw new Error("Something went wrong");
     }
   },
 };
