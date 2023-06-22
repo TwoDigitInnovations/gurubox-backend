@@ -79,7 +79,13 @@ module.exports = {
         //   username: user.username,
         // });
         // let token = await new jwtService().createJwtToken({ id: user._id, email: user.username });
-        return response.created(res, { email: user.email });
+        let token = await new jwtService().createJwtToken({
+          id: user._id,
+          user: user.username,
+          type: user.type,
+        });
+        delete user._doc.password;
+        return response.created(res, { ...user._doc, token });
       } else {
         return response.conflict(res, {
           message: " Email already exists.",
@@ -101,8 +107,16 @@ module.exports = {
           upsert: true,
         }
       );
-      delete u.password;
-      return response.ok(res, { user: u, message: "Became Organizer!" });
+      let token = await new jwtService().createJwtToken({
+        id: u._id,
+        user: u.username,
+        type: u.type,
+      });
+      delete u._doc.password;
+      return response.ok(res, {
+        user: { ...u._doc, token },
+        message: "Became Organizer!",
+      });
     } catch (error) {
       return response.error(res, error);
     }

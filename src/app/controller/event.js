@@ -123,7 +123,7 @@ module.exports = {
         cond.type_of_event = q.category;
       }
       if (q.location) {
-        cond.city = q.location;
+        cond["$text"] = { $search: q.location };
       }
       if (q.start && !q.end) {
         let d = moment(req.query.start, "YYYY/MM/DD").format();

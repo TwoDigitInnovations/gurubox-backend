@@ -63,6 +63,8 @@ const event = new mongoose.Schema(
   }
 );
 
+event.index({ name: "text", city: "text" });
+
 event.set("toJSON", {
   getters: true,
   virtuals: false,
