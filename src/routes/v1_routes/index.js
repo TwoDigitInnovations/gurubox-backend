@@ -288,6 +288,12 @@ router.get(
 );
 
 router.get(
+  "/org/get-event",
+  isAuthenticated(["ADMIN", "ORG"]),
+  event?.getAllEventsByUser
+);
+
+router.get(
   "/dashboard/get-event?",
   isAuthenticated(["ADMIN", "ORG"]),
   event?.getAllEventsforDashBoard

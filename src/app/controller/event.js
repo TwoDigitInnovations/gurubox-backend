@@ -30,6 +30,15 @@ module.exports = {
     }
   },
 
+  getAllEventsByUser: async (req, res) => {
+    try {
+      const event = await Event.find({ posted_by: req.user.id });
+      return response.ok(res, event);
+    } catch (error) {
+      return response.error(res, error);
+    }
+  },
+
   getAllEventsbyFilter: async (req, res) => {
     try {
       let d = moment(req.query.start, "MM/DD/YYYY").format();
