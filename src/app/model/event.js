@@ -27,13 +27,13 @@ const event = new mongoose.Schema(
       type: String,
     },
     capacity: {
-      type: String,
+      type: Number,
     },
     image: {
       type: String,
     },
     amount: {
-      type: String,
+      type: Number,
     },
     details: {
       type: Object,
