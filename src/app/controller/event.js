@@ -105,11 +105,24 @@ module.exports = {
 
   getEventById: async (req, res) => {
     try {
+      let soldTickets = 0;
+      const tick = await TicketBooking.find({
+        event_id: req?.params?.event_id,
+      });
+      tick.map((f) => {
+        soldTickets = soldTickets + Number(f.qty);
+      });
+
       const event = await Event.findById(req?.params?.event_id).populate(
         "posted_by",
         "firstname lastname email"
       );
-      return response.ok(res, event);
+      const data = {
+        ...event._doc,
+        soldTickets,
+        availableTickets: Number(event.capacity) - soldTickets,
+      };
+      return response.ok(res, data);
     } catch (error) {
       return response.error(res, error);
     }
@@ -124,6 +137,10 @@ module.exports = {
       }
       if (q.location) {
         cond["$text"] = { $search: q.location };
+      }
+
+      if (q.name) {
+        cond["$text"] = { $search: q.name };
       }
       if (q.start && !q.end) {
         let d = moment(req.query.start, "YYYY/MM/DD").format();
