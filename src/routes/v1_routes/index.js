@@ -330,6 +330,12 @@ router.delete(
   event?.deleteBoking
 );
 
+router.post(
+  "/sendPdf",
+  isAuthenticated(["USER", "ADMIN", "ORG"]),
+  event.sendMailWithPdf
+);
+
 //help
 router.post(
   "/create-help",

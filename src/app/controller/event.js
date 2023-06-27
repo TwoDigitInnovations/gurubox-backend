@@ -229,6 +229,24 @@ module.exports = {
     }
   },
 
+  sendMailWithPdf: async (req, res) => {
+    try {
+      const data = req.body;
+      const attachments = [
+        {
+          filename: "Ticket",
+          path: data.attachment,
+          // content: data.attachment.split(",").pop(),
+          // contentType: "application/pdf"
+        },
+      ];
+      mailNotification.sendPdf({ email: data.email, attachments });
+      return response.ok(res, { message: "Ticket sent." });
+    } catch (error) {
+      return response.error(res, error);
+    }
+  },
+
   getBookingByUser: async (req, res) => {
     console.log(req);
     try {

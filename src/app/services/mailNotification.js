@@ -10,15 +10,16 @@ const transporter = nodemailer.createTransport({
     pass: process.env.MAIL_PASS,
   },
 });
-const sendMail = async (to, subject, html) => {
+const sendMail = async (to, subject, html, attachments) => {
   return new Promise((resolve, reject) => {
     const mailConfigurations = {
       from: process.env.MAIL_USER,
       to,
       subject,
       html,
+      attachments,
     };
-    console.log(mailConfigurations);
+    // console.log(mailConfigurations);
     transporter.sendMail(mailConfigurations, function (error, info) {
       if (error) return reject(error);
       return resolve(info);
@@ -80,6 +81,16 @@ module.exports = {
     } catch (err) {
       console.log(err);
       throw new Error("Something went wrong");
+    }
+  },
+
+  sendPdf: async ({ email, attachments }) => {
+    try {
+      const html = `<div>Here is Ticket</div>`;
+      return await sendMail(email, "Ticket generated", html, attachments);
+    } catch (err) {
+      console.log(err);
+      throw new Error("[sendPdf]Could not send sendPdf mail");
     }
   },
 };
