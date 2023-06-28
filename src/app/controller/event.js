@@ -23,7 +23,9 @@ module.exports = {
 
   getAllEvents: async (req, res) => {
     try {
-      const event = await Event.find();
+      let d = new Date();
+      let cond = { $gte: d };
+      const event = await Event.find({ start_date: cond });
       return response.ok(res, event);
     } catch (error) {
       return response.error(res, error);
@@ -261,7 +263,10 @@ module.exports = {
 
   getBookingById: async (req, res) => {
     try {
-      let book = await TicketBooking.findById(req?.params?.book_id);
+      let book = await TicketBooking.findById(req?.params?.book_id).populate(
+        "booked_by",
+        "-password"
+      );
       return response.ok(res, book);
     } catch (error) {
       return response.error(res, error);
