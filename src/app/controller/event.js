@@ -25,7 +25,10 @@ module.exports = {
     try {
       let d = new Date();
       let cond = { $gte: d };
-      const event = await Event.find({ start_date: cond });
+      const event = await Event.find({ start_date: cond }).populate(
+        "posted_by",
+        "-password"
+      );
       return response.ok(res, event);
     } catch (error) {
       return response.error(res, error);
