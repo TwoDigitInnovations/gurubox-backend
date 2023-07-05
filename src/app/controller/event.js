@@ -263,10 +263,9 @@ module.exports = {
 
   getBookingById: async (req, res) => {
     try {
-      let book = await TicketBooking.findById(req?.params?.book_id).populate(
-        "booked_by",
-        "-password"
-      );
+      let book = await TicketBooking.findById(req?.params?.book_id)
+        .populate("booked_by", "-password")
+        .populate("event_id");
       return response.ok(res, book);
     } catch (error) {
       return response.error(res, error);
