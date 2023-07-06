@@ -28,19 +28,19 @@ const ticketBooking = new mongoose.Schema(
       ref: "Event",
     },
     qty: {
-      type: String,
+      type: Number,
     },
     total: {
-      type: String,
+      type: Number,
     },
     bookingfee: {
-      type: String,
+      type: Number,
     },
     deliveryfee: {
-      type: String,
+      type: Number,
     },
     discount: {
-      type: String,
+      type: Number,
     },
     address1: {
       type: String,

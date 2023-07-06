@@ -102,7 +102,7 @@ router.post(
   user.changePasswordProfile
 );
 
-router.get("/me", isAuthenticated(["USER", "ORG", "ORG"]), user.me);
+router.get("/me", isAuthenticated(["USER", "ORG", "ADMIN"]), user.me);
 router.post(
   "/profile/update",
   isAuthenticated(["USER", "ORG", "ADMIN"]),

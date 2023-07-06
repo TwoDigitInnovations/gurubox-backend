@@ -125,7 +125,7 @@ module.exports = {
 
       const event = await Event.findById(req?.params?.event_id).populate(
         "posted_by",
-        "firstname lastname email"
+        "firstname lastname email profile"
       );
       const data = {
         ...event._doc,
