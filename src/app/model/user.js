@@ -87,6 +87,13 @@ const userSchema = new mongoose.Schema(
     banner: {
       type: String,
     },
+    profile: {
+      type: String,
+    },
+    notification: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,

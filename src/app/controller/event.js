@@ -101,7 +101,12 @@ module.exports = {
 
   getSimilierEvent: async (req, res) => {
     try {
-      const event = await Event.find({ posted_by: req?.params?.id });
+      let d = new Date();
+      let cond = { $gte: d };
+      const event = await Event.find({
+        posted_by: req?.params?.id,
+        start_date: cond,
+      });
       return response.ok(res, event);
     } catch (error) {
       return response.error(res, error);
