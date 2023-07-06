@@ -260,9 +260,9 @@ module.exports = {
   getBookingByUser: async (req, res) => {
     console.log(req);
     try {
-      let book = await TicketBooking.find({ booked_by: req?.user.id }).populate(
-        "event_id"
-      );
+      let book = await TicketBooking.find({ booked_by: req?.user.id })
+        .populate("event_id")
+        .sort({ createdAt: -1 });
       return response.ok(res, book);
     } catch (error) {
       return response.error(res, error);
